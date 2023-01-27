@@ -4,7 +4,7 @@
 
     define('DB_HOST', 'localhost');
     define('DB_PORT', '3306');
-    define('DB_DATABASE', 'ex_form_php_bdd');
+    define('DB_DATABASE', 'hospitale2n');
     define('DB_USERNAME', 'root');
     define('DB_PASSWORD', '');
 
@@ -27,7 +27,7 @@
 
     Nom : <input type="text" name="lastname"> <br>
     Prenom : <input type="text" name="firstname"> <br>
-    Date de naissance : <input type="number" name="birthdate"> <br>
+    Date de naissance : <input type="text" name="birthdate"> <br>
     Tel : <input type="number" name="phone"> <br>
     Mail : <input type="email" name="mail"> <br>
     <input type="submit" name="submit">
@@ -38,45 +38,37 @@
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
-    // if(empty($_POST['firstname']) || empty($_POST['lastname']) || empty($_POST['pseudo']) || empty($_POST['email']) || empty($_POST['password'])){
-    //     echo "Veuillez remplir les champs obligatoires";
-    // }
-    // else {
-    //     echo "Merci d'avoir rempli tous les champs";
-    // }
+    if(empty($_POST['lastname']) || empty($_POST['firstname']) || empty($_POST['birthdate']) || empty($_POST['phone']) || empty($_POST['mail'])){
+        echo "Veuillez remplir les champs obligatoires";
+    }
+    else {
+        echo "Merci d'avoir rempli tous les champs";
+    }
 
 
-    // function addrE($str){
-    //     $str == $pattern ='/^([a-zA-Z]|[0-9]|[\-\.\_])+@([a-zA-Z]|[0-9]|[\-\.\_])+\.[a-z]/';
-    //     return preg_match($pattern, $str);
-    // }
-    // //echo addrE($_POST['email']);
-    // $email = addrE($_POST['email']);
+    function addrE($str){
+        $str == $pattern ='/^([a-zA-Z]|[0-9]|[\-\.\_])+@([a-zA-Z]|[0-9]|[\-\.\_])+\.[a-z]/';
+        return preg_match($pattern, $str);
+    }
+    //echo addrE($_POST['email']);
+    $mail = addrE($_POST['mail']);
 
 
-    // function verifDa($str){
-    //     $str == $pattern =  '/\d{2}[\/,.\-]\d{2}[\/,.\-]\d{4}$/';
-    //     // '/\d{2}[\/,.\-]\d{2}[\/,.\-]\d{4}$/'   --> optimisé
-    //     // '^(0?[1-9]|[10-31])\/ (0?[1-9]|[10-12])\/ [0-9]{4}'/    ---> optimisée ++ --> le 0 avant les crochets précise que dans le cas ou un utilisateur rentre une date avec qu'un seul chiffre avant : il sera rajouté
-    //     return preg_match($pattern, $str);
-    // }
-    // $birthDate = verifDa($_POST['birthDate']);
-    // //echo verifDa($_POST['birthDate']);
+    function verifDa($str){
+        $str == $pattern =  '/\d{2}[\/,.\-]\d{2}[\/,.\-]\d{4}$/';
+        // '/\d{2}[\/,.\-]\d{2}[\/,.\-]\d{4}$/'   --> optimisé
+        // '^(0?[1-9]|[10-31])\/ (0?[1-9]|[10-12])\/ [0-9]{4}'/    ---> optimisée ++ --> le 0 avant les crochets précise que dans le cas ou un utilisateur rentre une date avec qu'un seul chiffre avant : il sera rajouté
+        return preg_match($pattern, $str);
+    }
+    $birthdate = verifDa($_POST['birthdate']);
+    //echo verifDa($_POST['birthDate']);
 
-
-    // function verifCP($str){
-    //     $str == $pattern = '/\d{4}/';  // ou \d
-    //     return preg_match($pattern, $str);
-    // }
-    // $codePostal = verifCP($_POST['postCode']);
-
- 
 
     function test_input($data){
         $data = trim($data, "\s");
         $data = stripslashes($data);
         
-        if(empty($_POST['firstName']) || empty($_POST['lastName']) ||empty($_POST['pseudo']) ||empty($_POST['email']) ||empty($_POST['birthDate'])){
+        if(empty($_POST['lastname']) || empty($_POST['firstname']) || empty($_POST['birthdate']) || empty($_POST['phone']) || empty($_POST['number']) || empty($_POST['birthDate'])){
             echo "Veuillez saisir une donnée";
         }
         else{
@@ -88,13 +80,19 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     //echo verifCP($_POST['postCode']);
 
 
-    $query = 'INSERT INTO client (nom, prenom, pseudo, email, date_naissance, code_postal, mdp) VALUES (?, ?, ?, ?, ?, ?, ?);';
+    $query = 'INSERT INTO patients (lastname, firstname, birthdate, phone, mail) VALUES (?, ?, ?, ?, ?);';
     $sql = $database -> prepare($query);
-    $sql-> execute(array($_POST['firstName'], $_POST['lastName'], $_POST['pseudo'], $email, $_POST['birthDate'], $_POST['postCode'], $_POST['password']));
+    $sql-> execute(array($_POST['lastname'], $_POST['firstname'], $birthdate, $_POST['phone'], $mail));
 
 
 }
 
+
+// prepare(SELECT cli_nom FROM client WHERE cli_id = ?);
+
+
+
+?>
  
 </body>
 </html>
