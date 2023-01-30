@@ -10,14 +10,6 @@ $button.addEventListener('click', function(){
     
 });
 
-// function donneesP($patient){
 
-//     ?>
-
-//     <div> <?php echo $patient['phone']." "; echo $patient['mail']; ?> </div> <br>
-
-//     <?php
-    
-// }
 
 ?>

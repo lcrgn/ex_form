@@ -26,6 +26,15 @@ $patients = $sql2 -> fetchAll();
 
 echo '<h2> Les noms des clients </h2>';
 include('profil-patient.php');
+$button = document.getElementById('button');
+$button.addEventListener('click', function(){
+    ?>
+
+    <div> <?php echo $patient['phone']." "; echo $patient['mail']; ?> </div> <br>
+
+    <?php
+    
+});
 
 
 foreach($patients as $patient){
