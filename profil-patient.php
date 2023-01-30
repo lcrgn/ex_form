@@ -1,14 +1,17 @@
 <?php
 
-$button = document.getElementById('button');
-$button.addEventListener('click', function(){
+include('liste-patient.php');
+include('liste-rendezvous.php');
+
+foreach($patients as $patient){
     ?>
 
     <div> <?php echo $patient['phone']." "; echo $patient['mail']; ?> </div> <br>
+    <div> <?php echo $appointments['dateHour']." "; echo $appointments['idPatients']; ?> </div> <br>
 
     <?php
-    
-});
+
+}
 
 
 
